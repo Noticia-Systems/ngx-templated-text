@@ -3,5 +3,37 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ngx-templated-text": {
+      "projectType": "library",
+      "root": "projects/ngx-templated-text",
+      "sourceRoot": "projects/ngx-templated-text/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-templated-text/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-templated-text/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-templated-text/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-templated-text/src/test.ts",
+            "tsConfig": "projects/ngx-templated-text/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-templated-text/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-templated-text"
 }
