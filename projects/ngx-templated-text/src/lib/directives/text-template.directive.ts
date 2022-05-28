@@ -1,5 +1,6 @@
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, Host, Input, Optional, TemplateRef } from '@angular/core';
 import { TemplatedTextDirective } from "./templated-text.directive";
+
 
 @Directive({
   selector: '[textTemplate]'
@@ -26,8 +27,11 @@ export class TextTemplateDirective {
    */
   constructor(
     private templateRef: TemplateRef<any>,
-    public templatedTextDirective: TemplatedTextDirective
+    @Optional() @Host() private templatedTextDirective: TemplatedTextDirective
   ) {
+    if(!templatedTextDirective){
+      throw new Error("Elements holding the *textTemplate attribute need to be in a container holding the *templatedText attribute.");
+    }
   }
 
   // #endregion

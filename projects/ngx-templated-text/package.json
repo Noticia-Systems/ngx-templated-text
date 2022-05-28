@@ -1,6 +1,26 @@
 {
-  "name": "ngx-templated-text",
-  "version": "0.0.1",
+  "name": "@noticia-systems/ngx-templated-text",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Noticia Systems <info@noticia.systems> (https://noticia.systems)",
+  "description": "Replaces placeholders using predefined templates within a text.",
+  "homepage": "https://github.com/Noticia-Systems/ngx-templated-text",
+  "keywords": [
+    "angular",
+    "typescript",
+    "javascript",
+    "template",
+    "text",
+    "directive",
+    "translation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Noticia-Systems/ngx-templated-text.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Noticia-Systems/ngx-templated-text/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^13.3.0",
     "@angular/core": "^13.3.0"

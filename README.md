@@ -1,27 +1,61 @@
-# NgxTemplatedText
+[![Node.js Package](https://github.com/Noticia-Systems/ngx-templated-text/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/Noticia-Systems/ngx-templated-text/actions/workflows/npm-publish.yml) [![Node.js CI](https://github.com/Noticia-Systems/ngx-templated-text/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/Noticia-Systems/ngx-templated-text/actions/workflows/node.js.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
+ngx-templated-text allows for simple replacement of placeholders in a text with given templates.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+``npm install @noticia-systems/ngx-templated-text``
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```angular2html
+<ng-container *templatedText="'Click {here} or {maybe-here} for magic to happen.'">
+  <a *textTemplate="'here'" href="#">here</a>
+  <a *textTemplate="'maybe-here'" href="#">maybe here</a>
+</ng-container>
+```
+This will render the text passed to `*templatedText` with the anchor templates.
 
-## Build
+For technical reasons the generated output will be: 
+```angular2html
+<text>Click </text><a href="#">here</a><text> or </text><a href="#">maybe here</a><text>for magic to happen.</text>
+```
+, but it will mostly behave just like:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```angular2html
+Click <a href="#">here</a> or <a href="#">maybe here</a> for magic to happen.
+```
 
-## Running unit tests
+This workflow is especially useful when using translation packages like `ngx-translate`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+A practical example would be to display a checkbox and its associated label within a form for accepting the terms and privacy policy. For better UX an anchor to the terms and privacy policy would be desirable.  
 
-## Running end-to-end tests
+Instead of having to add html code to the translation file, we can now prepare templates we can maintain from within the components. We could implement the following workflow using `ngx-translate`:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+#### en.json
+```json
+{
+  "terms": "terms",
+  "privacy-policy": "privacy policy",
+  "accept-terms-and-privacy-policy": "I accept the {terms} and {privacy-policy}." 
+}
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### app.component.html
+```angular2html
+<form>
+  <div>
+    <input type="checkbox"></input>
+    
+    <label>
+      <ng-container *templatedText="'accept-terms-and-privacy-policy' | translate">
+        <a *textTemplate="'terms'" href="#">{{'terms' | translate}}</a>
+        <a *textTemplate="'privacy-policy'" href="#">{{'privacy-policy' | translate}}</a>
+      </ng-container>
+      
+      *
+    </label>
+  </div>
+</form>
+```
+(Asterisk denoting that this field is required.)

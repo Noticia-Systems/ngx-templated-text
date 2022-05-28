@@ -6,7 +6,7 @@ import { MockBuilder, MockRender, ngMocks } from "ng-mocks";
 @Component({
   selector: 'test',
   template: `
-    <div *templatedText>
+    <div *templatedText="null">
       <span *textTemplate="placeholder"></span>
     </div>
   `
@@ -44,6 +44,11 @@ describe('TextTemplateDirective', () => {
 
       expect(directive.enqueue).toHaveBeenCalled();
     }
+  });
+
+  it('should throw error when not placed in container with *templatedText', () => {
+    expect(() => MockRender(`<span *textTemplate="'test'"></span>`))
+      .toThrow(new Error("Elements holding the *textTemplate attribute need to be in a container holding the *templatedText attribute."));
   });
 
   // #endregion
